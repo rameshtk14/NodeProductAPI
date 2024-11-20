@@ -1,26 +1,25 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const Product = require('./Models/productModel');
+
 const app = express();
 const port = 3000;
 
-const mongoose = require('mongoose');
-
-const Product = require('./Models/productModel');
-// Routes
-
 // Middleware
-
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
+// Routes
 // GET
 app.get('/', (req, res) => {
     res.send('Hello World');
 })
 
 app.get('/demo', (req, res) => {
-    res.send('This is DEMO on  Node API');
+    res.send('This is a DEMO on Node API');
 })
 
+// Get all products
 app.get('/products', async (req, res) => {
     try {
         const products = await Product.find();
@@ -32,6 +31,7 @@ app.get('/products', async (req, res) => {
     }
 })
 
+// Get a product by ID
 app.get('/products/:id', async (req, res) => {
     try {
         const {id} = req.params
@@ -77,7 +77,6 @@ app.delete('/products/:id', async (req, res) => {
     catch (err) {
         console.log(err);
         res.status(500).json({message:err.message});
-        console.log("Hell")
     }
 }
 )
