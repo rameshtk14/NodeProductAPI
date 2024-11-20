@@ -11,12 +11,14 @@ const Product = require('./Models/productModel');
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
+
+// GET
 app.get('/', (req, res) => {
     res.send('Hello World');
 })
 
-app.get('/blog', (req, res) => {
-    res.send('Hello bloggers this is TRK');
+app.get('/demo', (req, res) => {
+    res.send('This is DEMO on  Node API');
 })
 
 app.get('/products', async (req, res) => {
@@ -73,7 +75,6 @@ app.delete('/products/:id', async (req, res) => {
         res.status(200).json({message:`Product ${id} deleted`});
     }
     catch (err) {
-        console.log("Hello")
         console.log(err);
         res.status(500).json({message:err.message});
         console.log("Hell")
@@ -81,13 +82,13 @@ app.delete('/products/:id', async (req, res) => {
 }
 )
 
+// POST
+
 app.post('/products',async (req, res) => {
 
     try {
        const product =  await Product.create(req.body);
        res.status(200).json(product);
-       // console.log(req.body);
-        //res.send(req.body)
     }
     catch (err) {
         console.log(err);
@@ -95,8 +96,9 @@ app.post('/products',async (req, res) => {
     }
 })
 
+// Replace username ands password with your own
 
-mongoose.connect('mongodb+srv://ramesh2014tk:exploreD_24@cluster0.o8d9pli.mongodb.net/NODEAPI?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect('mongodb+srv://{username}:{password}@cluster0.o8d9pli.mongodb.net/NODEAPI?retryWrites=true&w=majority&appName=Cluster0')
 .then(() => {
     console.log('Connected to MongoDB');
     app.listen(port, () => {
